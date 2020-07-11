@@ -1,3 +1,9 @@
+#Image Processing and Pattern Recognition Course Project
+#Smart Elevator using Facial Recognition
+#Aneesh Poduval, Johnathan Fernandes, Sarthak Chudgar
+
+#This program uses the generated database to detect faces and trigger the arduino demo elevator system
+
 import cv2
 import numpy as np
 import serial 
@@ -13,7 +19,6 @@ labels={"person_name":1}
 with open("labels.pickle",'rb')as f:
     og_labels= pickle.load(f)
     labels = {v:k for k,v in og_labels.items()}
-
 recognizer.read("trainner.yml")
 #ser=serial.Serial('com4',9600)
 frequency = 2500  # Set Frequency To 2500 Hertz
@@ -25,7 +30,6 @@ while(1):
         #print(i.shape)
         fire=fdc.detectMultiScale(gray,1.3,9)
         print(fire)
-
         if(len(fire)>=1):
          for x,y,w,h in fire:
               #print(x,y,w,h)
@@ -43,7 +47,6 @@ while(1):
                               if(id_==1):
                                       ser.write(b'S')
                       #print(conf)
-
               font=cv2.FONT_HERSHEY_SIMPLEX
               name=labels[id_]
               cv2.putText(i,name,(x,y),font,0.7,(255,255,255),2,cv2.LINE_AA)
@@ -54,12 +57,9 @@ while(1):
             # roi_gray = gray[y:y+h, x:x+w]
         cv2.imshow('image',i)
       #  serial.write('p')
-
-       # if(len(fire)==1):
-           
+       # if(len(fire)==1): 
         #   print('Face is detected')
         k=cv2.waitKey(5)
         if(k==ord('q')):
                 cv2.destroyAllWindows()
                 break
-                
